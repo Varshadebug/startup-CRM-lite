@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  body {
+    @apply bg-slate-50 dark:bg-slate-900 transition-colors duration-200;
+  }
+}
+
+
 @theme {
   --color-primary: #2563EB;
   --color-success: #22C55E;

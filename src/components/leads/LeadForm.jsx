@@ -56,7 +56,7 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Name */}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
+          <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
             Name <span className="text-red-500">*</span>
           </label>
           <input
@@ -65,7 +65,7 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-lg outline-none transition-colors ${errors.name ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500'}`}
+            className={`w-full px-3 py-2 min-h-[44px] border rounded-lg outline-none transition-colors dark:bg-slate-800 dark:text-white ${errors.name ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 dark:border-slate-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500'}`}
             placeholder="John Doe"
           />
           {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
@@ -73,7 +73,7 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
 
         {/* Company */}
         <div>
-          <label htmlFor="company" className="block text-sm font-medium text-slate-700 mb-1">
+          <label htmlFor="company" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
             Company <span className="text-red-500">*</span>
           </label>
           <input
@@ -82,7 +82,7 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
             name="company"
             value={formData.company}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-lg outline-none transition-colors ${errors.company ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500'}`}
+            className={`w-full px-3 py-2 min-h-[44px] border rounded-lg outline-none transition-colors dark:bg-slate-800 dark:text-white ${errors.company ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 dark:border-slate-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500'}`}
             placeholder="Acme Corp"
           />
           {errors.company && <p className="text-red-500 text-xs mt-1">{errors.company}</p>}
@@ -90,7 +90,7 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
+          <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
             Email <span className="text-red-500">*</span>
           </label>
           <input
@@ -99,7 +99,7 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className={`w-full px-3 py-2 border rounded-lg outline-none transition-colors ${errors.email ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500'}`}
+            className={`w-full px-3 py-2 min-h-[44px] border rounded-lg outline-none transition-colors dark:bg-slate-800 dark:text-white ${errors.email ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300 dark:border-slate-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500'}`}
             placeholder="john@example.com"
           />
           {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
@@ -107,7 +107,7 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
 
         {/* Phone */}
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">
+          <label htmlFor="phone" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
             Phone
           </label>
           <input
@@ -116,14 +116,14 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+            className="w-full px-3 py-2 min-h-[44px] border border-slate-300 dark:border-slate-600 dark:bg-slate-800 dark:text-white rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
             placeholder="+1 (555) 000-0000"
           />
         </div>
 
         {/* Status */}
         <div>
-          <label htmlFor="status" className="block text-sm font-medium text-slate-700 mb-1">
+          <label htmlFor="status" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
             Status
           </label>
           <select
@@ -131,7 +131,7 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors bg-white"
+            className="w-full px-3 py-2 min-h-[44px] border border-slate-300 dark:border-slate-600 dark:bg-slate-800 dark:text-white rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
           >
             {STATUS_OPTIONS.map(status => (
               <option key={status} value={status}>{status}</option>
@@ -141,7 +141,7 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
 
         {/* Source */}
         <div>
-          <label htmlFor="source" className="block text-sm font-medium text-slate-700 mb-1">
+          <label htmlFor="source" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
             Source
           </label>
           <select
@@ -149,7 +149,7 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
             name="source"
             value={formData.source}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors bg-white"
+            className="w-full px-3 py-2 min-h-[44px] border border-slate-300 dark:border-slate-600 dark:bg-slate-800 dark:text-white rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
           >
             {SOURCE_OPTIONS.map(source => (
               <option key={source} value={source}>{source}</option>
@@ -158,17 +158,17 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
         </div>
       </div>
 
-      <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 mt-6">
+      <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-700 mt-6">
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
+          className="px-4 py-2 min-h-[44px] text-sm font-medium text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+          className="px-4 py-2 min-h-[44px] text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
         >
           {initialData ? 'Save Changes' : 'Create Lead'}
         </button>

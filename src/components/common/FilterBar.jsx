@@ -16,13 +16,13 @@ export default function FilterBar({ activeFilter, onFilterChange, leads }) {
           <button
             key={filter}
             onClick={() => onFilterChange(filter)}
-            className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={`whitespace-nowrap px-4 py-2 min-h-[44px] flex items-center rounded-full text-sm font-medium transition-colors ${
               isActive 
-                ? 'bg-blue-600 text-white shadow-sm' 
-                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900'
+                ? 'bg-blue-600 dark:bg-blue-500 text-white shadow-sm' 
+                : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
-            {filter} <span className={`ml-1 ${isActive ? 'text-blue-100' : 'text-slate-400'}`}>({count})</span>
+            {filter} <span className={`ml-1 ${isActive ? 'text-blue-100 dark:text-blue-200' : 'text-slate-400 dark:text-slate-500'}`}>({count})</span>
           </button>
         );
       })}

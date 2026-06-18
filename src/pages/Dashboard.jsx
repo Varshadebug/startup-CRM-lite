@@ -16,14 +16,14 @@ export default function Dashboard() {
   const { leads } = useLeads();
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-8">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-900 transition-colors duration-200 p-4 md:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
 
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-800">Dashboard</h1>
-            <p className="text-slate-500 mt-1 text-sm">Welcome back! Here's what's happening today.</p>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Dashboard</h1>
+            <p className="text-slate-500 dark:text-slate-400 mt-1 text-sm">Welcome back! Here's what's happening today.</p>
           </div>
         </div>
 
@@ -60,9 +60,9 @@ export default function Dashboard() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column (takes up 2 cols on lg) */}
-          <div className="lg:col-span-2 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Left Column */}
+          <div className="space-y-6">
             <PipelineOverview leads={leads} />
             <RecentLeads leads={leads} />
           </div>

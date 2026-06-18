@@ -38,11 +38,11 @@ export default function PipelineOverview({ leads }) {
   const orderedStatuses = ['New', 'Contacted', 'Qualified', 'Proposal', 'Won', 'Lost'];
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100">
-      <h2 className="text-lg font-semibold text-slate-800 mb-6">Pipeline Overview</h2>
+    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-slate-700 transition-colors duration-200">
+      <h2 className="text-lg font-semibold text-slate-800 dark:text-white mb-6">Pipeline Overview</h2>
       
       {/* Horizontal Bar */}
-      <div className="w-full h-6 rounded-full flex overflow-hidden mb-6 bg-slate-100">
+      <div className="w-full h-6 rounded-full flex overflow-hidden mb-6 bg-slate-100 dark:bg-slate-700">
         {orderedStatuses.map(status => {
           const count = statusCounts[status] || 0;
           if (count === 0) return null;
@@ -68,8 +68,8 @@ export default function PipelineOverview({ leads }) {
           return (
             <div key={status} className="flex items-center gap-2 text-sm">
               <span className={`w-3 h-3 rounded-full ${statusConfig[status]?.color || 'bg-slate-400'}`} />
-              <span className="text-slate-600">{status}</span>
-              <span className="font-medium text-slate-800 ml-auto">{count}</span>
+              <span className="text-slate-600 dark:text-slate-400">{status}</span>
+              <span className="font-medium text-slate-800 dark:text-slate-200 ml-auto">{count}</span>
             </div>
           );
         })}

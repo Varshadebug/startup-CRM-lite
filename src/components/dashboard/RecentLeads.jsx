@@ -35,12 +35,12 @@ export default function RecentLeads({ leads }) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100 overflow-hidden">
-      <h2 className="text-lg font-semibold text-slate-800 mb-6">Recent Leads</h2>
+    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-slate-700 overflow-hidden transition-colors duration-200">
+      <h2 className="text-lg font-semibold text-slate-800 dark:text-white mb-6">Recent Leads</h2>
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-slate-200 text-sm text-slate-500">
+            <tr className="border-b border-slate-200 dark:border-slate-700 text-sm text-slate-500 dark:text-slate-400">
               <th className="pb-3 font-medium">Name</th>
               <th className="pb-3 font-medium">Company</th>
               <th className="pb-3 font-medium">Status</th>
@@ -50,22 +50,22 @@ export default function RecentLeads({ leads }) {
           <tbody>
             {displayLeads.length > 0 ? (
               displayLeads.map((lead) => (
-                <tr key={lead.id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors">
-                  <td className="py-4 text-sm font-medium text-slate-800">{lead.name}</td>
-                  <td className="py-4 text-sm text-slate-600">{lead.company}</td>
+                <tr key={lead.id} className="border-b border-slate-100 dark:border-slate-700 last:border-0 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                  <td className="py-4 text-sm font-medium text-slate-800 dark:text-slate-200">{lead.name}</td>
+                  <td className="py-4 text-sm text-slate-600 dark:text-slate-400">{lead.company}</td>
                   <td className="py-4 text-sm">
                     <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${getStatusBadgeStyles(lead.status)}`}>
                       {lead.status}
                     </span>
                   </td>
-                  <td className="py-4 text-sm text-slate-500 text-right">
+                  <td className="py-4 text-sm text-slate-500 dark:text-slate-400 text-right">
                     {new Date(lead.dateAdded).toLocaleDateString()}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="py-8 text-center text-sm text-slate-500">
+                <td colSpan="4" className="py-8 text-center text-sm text-slate-500 dark:text-slate-400">
                   No recent leads found.
                 </td>
               </tr>

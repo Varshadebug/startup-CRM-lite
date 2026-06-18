@@ -22,20 +22,20 @@ export default function StatsCard({ title, value, icon: Icon, change, color = 'p
   const isPositive = change >= 0;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-100 flex flex-col hover:shadow-md transition-shadow">
+    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-slate-700 flex flex-col hover:shadow-md transition-all duration-200">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-slate-500 text-sm font-medium">{title}</h3>
+        <h3 className="text-slate-500 dark:text-slate-400 text-sm font-medium">{title}</h3>
         <div className={`p-2 rounded-lg ${colorStyles[color]}`}>
           <Icon size={20} />
         </div>
       </div>
       <div className="flex items-baseline gap-3">
-        <span className="text-3xl font-bold text-slate-800">{value}</span>
+        <span className="text-3xl font-bold text-slate-800 dark:text-white">{value}</span>
         <span className={`text-sm font-medium flex items-center ${isPositive ? 'text-[#22C55E]' : 'text-[#EF4444]'}`}>
           {isPositive ? '+' : ''}{change}%
         </span>
       </div>
-      <p className="text-xs text-slate-400 mt-2">vs last month</p>
+      <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">vs last month</p>
     </div>
   );
 }
