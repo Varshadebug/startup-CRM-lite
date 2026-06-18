@@ -4,6 +4,7 @@ import StatsCard from '../components/dashboard/StatsCard';
 import PipelineOverview from '../components/dashboard/PipelineOverview';
 import RecentLeads from '../components/dashboard/RecentLeads';
 import QuickActions from '../components/dashboard/QuickActions';
+import { useLeads } from '../context/LeadContext';
 
 
 /**
@@ -12,17 +13,7 @@ import QuickActions from '../components/dashboard/QuickActions';
  * @returns {JSX.Element} The rendered Dashboard page.
  */
 export default function Dashboard() {
-  // Sample data for Phase 8 integration
-  const sampleLeads = [
-    { id: '1', name: 'Alice Smith', company: 'TechCorp', status: 'New', dateAdded: '2026-06-16T08:00:00Z' },
-    { id: '2', name: 'Bob Johnson', company: 'Innovate LLC', status: 'Contacted', dateAdded: '2026-06-15T10:30:00Z' },
-    { id: '3', name: 'Charlie Davis', company: 'Growth Inc', status: 'Qualified', dateAdded: '2026-06-14T14:15:00Z' },
-    { id: '4', name: 'Diana Prince', company: 'Wayne Ent', status: 'Proposal', dateAdded: '2026-06-13T09:45:00Z' },
-    { id: '5', name: 'Ethan Hunt', company: 'IMF', status: 'Won', dateAdded: '2026-06-12T16:20:00Z' },
-    { id: '6', name: 'Fiona Gallagher', company: 'South Side', status: 'Lost', dateAdded: '2026-06-11T11:00:00Z' },
-    { id: '7', name: 'George Costanza', company: 'Vandelay', status: 'New', dateAdded: '2026-06-16T09:10:00Z' },
-    { id: '8', name: 'Hannah Abbott', company: 'Hogwarts', status: 'Qualified', dateAdded: '2026-06-15T15:25:00Z' }
-  ];
+  const { leads } = useLeads();
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-8">
@@ -72,8 +63,8 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column (takes up 2 cols on lg) */}
           <div className="lg:col-span-2 space-y-6">
-            <PipelineOverview leads={sampleLeads} />
-            <RecentLeads leads={sampleLeads} />
+            <PipelineOverview leads={leads} />
+            <RecentLeads leads={leads} />
           </div>
 
           {/* Right Column */}

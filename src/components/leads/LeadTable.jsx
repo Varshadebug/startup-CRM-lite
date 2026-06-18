@@ -46,7 +46,7 @@ export default function LeadTable({ leads, onEdit, onDelete }) {
                 <td className="px-6 py-4 text-sm text-slate-600">{lead.email}</td>
                 <td className="px-6 py-4 text-sm text-slate-600">{lead.source}</td>
                 <td className="px-6 py-4 text-sm text-slate-500">
-                  {new Date(lead.dateAdded).toLocaleDateString()}
+                  {new Date(lead.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 text-right">
                   <div className="flex items-center justify-end gap-2">

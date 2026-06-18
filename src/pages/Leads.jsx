@@ -4,12 +4,10 @@ import toast, { Toaster } from 'react-hot-toast';
 import LeadTable from '../components/leads/LeadTable';
 import LeadCard from '../components/leads/LeadCard';
 import LeadForm from '../components/leads/LeadForm';
-
-// Initial sample data
-const initialLeads = [
-  { id: '1', name: 'Alice Smith', company: 'TechCorp', email: 'alice@techcorp.com', phone: '555-0101', status: 'New', source: 'Website', dateAdded: '2026-06-16T08:00:00Z' },
-  { id: '2', name: 'Bob Johnson', company: 'Innovate LLC', email: 'bob@innovate.com', phone: '555-0102', status: 'Contacted', source: 'Referral', dateAdded: '2026-06-15T10:30:00Z' }
-];
+import SearchBar from '../components/common/SearchBar';
+import FilterBar from '../components/common/FilterBar';
+import EmptyState from '../components/common/EmptyState';
+import { useLeads } from '../context/LeadContext';
 
 /**
  * Main Leads page component.
@@ -17,10 +15,25 @@ const initialLeads = [
  * @returns {JSX.Element}
  */
 export default function Leads() {
-  const [leads, setLeads] = useState(initialLeads);
+  const { leads, addLead, updateLead, deleteLead } = useLeads();
   const [viewMode, setViewMode] = useState('table'); // 'table' or 'card'
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilter, setActiveFilter] = useState('All');
+
+  const filteredLeads = leads
+    .filter(lead => activeFilter === 'All' || lead.status === activeFilter)
+    .filter(lead =>
+      lead.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      lead.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      lead.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+  const handleClearFilters = () => {
+    setSearchQuery('');
+    setActiveFilter('All');
+  };
 
   const handleOpenModal = (lead = null) => {
     setSelectedLead(lead);
@@ -35,16 +48,11 @@ export default function Leads() {
   const handleSubmit = (formData) => {
     if (selectedLead) {
       // Update existing
-      setLeads(prev => prev.map(l => l.id === selectedLead.id ? { ...l, ...formData } : l));
+      updateLead(selectedLead.id, formData);
       toast.success('Lead updated successfully!', { icon: '✅' });
     } else {
       // Create new
-      const newLead = {
-        ...formData,
-        id: Date.now().toString(),
-        dateAdded: new Date().toISOString()
-      };
-      setLeads(prev => [newLead, ...prev]);
+      addLead(formData);
       toast.success('Lead created successfully!', { icon: '🎉' });
     }
     handleCloseModal();
@@ -52,7 +60,7 @@ export default function Leads() {
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this lead?')) {
-      setLeads(prev => prev.filter(l => l.id !== id));
+      deleteLead(id);
       toast.error('Lead deleted.', { icon: '🗑️' });
     }
   };
@@ -70,8 +78,8 @@ export default function Leads() {
           </div>
           
           <div className="flex items-center gap-3">
-            {/* View Toggle (Hidden on very small screens where cards are forced anyway) */}
-            <div className="hidden sm:flex items-center bg-white border border-slate-200 rounded-lg p-1">
+            {/* View Toggle */}
+            <div className="flex items-center bg-white border border-slate-200 rounded-lg p-1">
               <button 
                 onClick={() => setViewMode('table')}
                 className={`p-1.5 rounded-md transition-colors ${viewMode === 'table' ? 'bg-slate-100 text-slate-800 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
@@ -98,36 +106,32 @@ export default function Leads() {
           </div>
         </div>
 
+        {/* Filters and Search */}
+        <div className="flex flex-col space-y-4 mb-6">
+          <SearchBar value={searchQuery} onChange={setSearchQuery} />
+          <FilterBar activeFilter={activeFilter} onFilterChange={setActiveFilter} leads={leads} />
+        </div>
+
         {/* Content Area */}
         <div className="w-full">
-          {/* Mobile view forces cards. Desktop view respects the toggle */}
-          <div className={`sm:hidden grid grid-cols-1 gap-4`}>
-             {leads.map(lead => (
-               <LeadCard key={lead.id} lead={lead} onEdit={handleOpenModal} onDelete={handleDelete} />
-             ))}
-             {leads.length === 0 && (
-                <div className="bg-white border border-slate-200 rounded-xl p-8 text-center text-slate-500">
-                  No leads found.
-                </div>
-             )}
-          </div>
-
-          <div className="hidden sm:block">
-            {viewMode === 'table' ? (
-              <LeadTable leads={leads} onEdit={handleOpenModal} onDelete={handleDelete} />
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {leads.map(lead => (
-                  <LeadCard key={lead.id} lead={lead} onEdit={handleOpenModal} onDelete={handleDelete} />
-                ))}
-                {leads.length === 0 && (
-                  <div className="col-span-full bg-white border border-slate-200 rounded-xl p-8 text-center text-slate-500">
-                    No leads found.
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+          {viewMode === 'table' ? (
+            <>
+              {filteredLeads.length > 0 ? (
+                <LeadTable leads={filteredLeads} onEdit={handleOpenModal} onDelete={handleDelete} />
+              ) : (
+                <EmptyState totalLeads={leads.length} onClearFilters={handleClearFilters} />
+              )}
+            </>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {filteredLeads.map(lead => (
+                <LeadCard key={lead.id} lead={lead} onEdit={handleOpenModal} onDelete={handleDelete} />
+              ))}
+              {filteredLeads.length === 0 && (
+                <EmptyState totalLeads={leads.length} onClearFilters={handleClearFilters} />
+              )}
+            </div>
+          )}
         </div>
 
       </div>
