@@ -22,26 +22,30 @@ export default function StatsCard({ title, value, icon: Icon, change, color = 'p
   const isPositive = change >= 0;
 
   return (
-    <div className="bg-white dark:bg-slate-800/90 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 p-5 md:p-6 flex flex-col justify-between min-h-[140px] border border-slate-100 dark:border-slate-700/50 relative overflow-hidden group backdrop-blur-sm">
+    <div className="bg-white dark:bg-slate-800/90 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-5 flex flex-col justify-between min-h-[140px] border border-slate-100 dark:border-slate-700/50 relative overflow-hidden group backdrop-blur-sm">
       {/* Glassmorphism subtle gradient background */}
       <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-gradient-to-br from-slate-100 to-transparent dark:from-slate-700/30 dark:to-transparent opacity-50 blur-3xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
 
+      {/* Top Row: [Icon] [Title] */}
       <div className="flex items-center gap-3 relative z-10">
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 shadow-sm ${colorStyles[color]}`}>
-          <Icon className="w-5 h-5" />
+        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-sm ${colorStyles[color]}`}>
+          <Icon className="w-4 h-4" />
         </div>
-        <div>
-          <p className="text-sm font-medium text-slate-600 dark:text-slate-400 leading-tight break-words whitespace-normal">
-            {title}
-          </p>
-        </div>
+        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+          {title}
+        </p>
       </div>
       
-      <div className="mt-4 relative z-10 flex flex-col justify-end">
-        <span className="text-4xl font-bold text-slate-900 dark:text-white leading-none">
+      {/* Middle: [Main Value] */}
+      <div className="relative z-10 mt-2">
+        <span className="text-4xl font-bold text-slate-900 dark:text-white leading-none tracking-tight">
           {value}
         </span>
-        <span className={`text-sm font-medium mt-3 block ${isPositive ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'}`}>
+      </div>
+
+      {/* Bottom: [Trend] */}
+      <div className="relative z-10 mt-1">
+        <span className={`text-sm font-semibold ${isPositive ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
           {isPositive ? '+' : ''}{change}% vs last month
         </span>
       </div>
