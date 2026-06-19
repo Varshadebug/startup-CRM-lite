@@ -33,7 +33,7 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
-export default function PieChartCard({ data, totalLeads }) {
+const PieChartCard = React.memo(function PieChartCard({ data, totalLeads }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onPieEnter = (_, index) => {
@@ -47,13 +47,13 @@ export default function PieChartCard({ data, totalLeads }) {
   }));
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm flex flex-col h-full transition-colors duration-200">
-      <div className="mb-4">
-        <h3 className="text-lg font-bold text-slate-800 dark:text-white">Lead Status Distribution</h3>
-        <p className="text-sm text-slate-500 dark:text-slate-400">Current status of all selected leads.</p>
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 md:p-6 shadow-sm flex flex-col justify-between min-h-[300px] transition-colors duration-200">
+      <div className="mb-4 md:mb-6">
+        <h3 id="piechart-heading" className="text-sm md:text-base font-medium text-slate-800 dark:text-white break-words whitespace-normal leading-snug">Lead Status Distribution</h3>
+        <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1 break-words whitespace-normal">Current status of all selected leads.</p>
       </div>
 
-      <div className="flex-grow flex flex-col lg:flex-row items-center justify-between">
+      <div className="flex-grow flex flex-col lg:flex-row items-center justify-between" role="figure" aria-labelledby="piechart-heading">
         {/* Chart */}
         <div className="w-full lg:w-1/2 h-[250px] relative">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
@@ -79,7 +79,7 @@ export default function PieChartCard({ data, totalLeads }) {
           </ResponsiveContainer>
           
           {/* Center Label */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none" aria-hidden="true">
             <span className="text-2xl font-bold text-slate-800 dark:text-white">{totalLeads}</span>
             <span className="text-xs text-slate-500 dark:text-slate-400">Total Leads</span>
           </div>
@@ -87,7 +87,7 @@ export default function PieChartCard({ data, totalLeads }) {
 
         {/* Legend */}
         <div className="w-full lg:w-1/2 mt-6 lg:mt-0 lg:pl-6">
-          <ul className="space-y-3">
+          <ul className="space-y-3" aria-label="Chart Legend">
             {dataWithPercents.map((entry, index) => (
               <li key={index} className="flex items-center justify-between text-sm">
                 <div className="flex items-center gap-2">
@@ -108,4 +108,6 @@ export default function PieChartCard({ data, totalLeads }) {
       </div>
     </div>
   );
-}
+});
+
+export default PieChartCard;

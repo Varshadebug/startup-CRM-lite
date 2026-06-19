@@ -22,15 +22,15 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
-export default function RevenueChartCard({ data }) {
+const RevenueChartCard = React.memo(function RevenueChartCard({ data }) {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm flex flex-col h-full transition-colors duration-200">
-      <div className="mb-6">
-        <h3 className="text-lg font-bold text-slate-800 dark:text-white">Revenue Analytics</h3>
-        <p className="text-sm text-slate-500 dark:text-slate-400">Won deal value over the last 6 months.</p>
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-4 md:p-6 shadow-sm flex flex-col justify-between min-h-[300px] transition-colors duration-200">
+      <div className="mb-4 md:mb-6">
+        <h3 id="revenuechart-heading" className="text-sm md:text-base font-medium text-slate-800 dark:text-white break-words whitespace-normal leading-snug">Revenue Analytics</h3>
+        <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1 break-words whitespace-normal">Won deal value over the last 6 months.</p>
       </div>
 
-      <div className="flex-grow w-full h-[250px]">
+      <div className="flex-grow w-full h-[250px]" role="figure" aria-labelledby="revenuechart-heading">
         <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           <AreaChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
             <defs>
@@ -69,4 +69,6 @@ export default function RevenueChartCard({ data }) {
       </div>
     </div>
   );
-}
+});
+
+export default RevenueChartCard;

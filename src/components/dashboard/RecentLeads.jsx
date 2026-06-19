@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 /**
  * @typedef {Object} Lead
@@ -16,11 +16,13 @@ import React from 'react';
  * @param {Lead[]} props.leads - The array of leads.
  * @returns {JSX.Element} The rendered RecentLeads component.
  */
-export default function RecentLeads({ leads }) {
-  // Get last 5 leads (assuming they are sorted, or we sort them, but let's just slice the latest)
-  // For safety, let's sort by date added descending and take top 5
-  const sortedLeads = [...leads].sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
-  const displayLeads = sortedLeads.slice(0, 5);
+const RecentLeads = React.memo(function RecentLeads({ leads }) {
+  // Memoize the sorting and slicing so it only recalculates if leads array changes
+  const displayLeads = useMemo(() => {
+    return [...leads]
+      .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded))
+      .slice(0, 5);
+  }, [leads]);
 
   const getStatusBadgeStyles = (status) => {
     switch (status) {
@@ -36,15 +38,15 @@ export default function RecentLeads({ leads }) {
 
   return (
     <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-slate-700 overflow-hidden transition-colors duration-200">
-      <h2 className="text-lg font-semibold text-slate-800 dark:text-white mb-6">Recent Leads</h2>
+      <h2 id="recent-leads-heading" className="text-lg font-semibold text-slate-800 dark:text-white mb-6">Recent Leads</h2>
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+        <table className="w-full text-left border-collapse" aria-labelledby="recent-leads-heading">
           <thead>
             <tr className="border-b border-slate-200 dark:border-slate-700 text-sm text-slate-500 dark:text-slate-400">
-              <th className="pb-3 font-medium">Name</th>
-              <th className="pb-3 font-medium">Company</th>
-              <th className="pb-3 font-medium">Status</th>
-              <th className="pb-3 font-medium text-right">Date Added</th>
+              <th scope="col" className="pb-3 font-medium">Name</th>
+              <th scope="col" className="pb-3 font-medium">Company</th>
+              <th scope="col" className="pb-3 font-medium">Status</th>
+              <th scope="col" className="pb-3 font-medium text-right">Date Added</th>
             </tr>
           </thead>
           <tbody>
@@ -58,7 +60,7 @@ export default function RecentLeads({ leads }) {
                       {lead.status}
                     </span>
                   </td>
-                  <td className="py-4 text-sm text-slate-500 dark:text-slate-400 text-right">
+                  <td className="py-4 text-sm text-slate-500 dark:text-slate-400 text-right whitespace-nowrap">
                     {new Date(lead.dateAdded).toLocaleDateString()}
                   </td>
                 </tr>
@@ -75,4 +77,6 @@ export default function RecentLeads({ leads }) {
       </div>
     </div>
   );
-}
+});
+
+export default RecentLeads;

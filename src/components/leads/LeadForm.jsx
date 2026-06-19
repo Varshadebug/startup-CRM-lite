@@ -20,6 +20,7 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
     phone: initialData?.phone || '',
     status: initialData?.status || 'New',
     source: initialData?.source || 'Website',
+    notes: initialData?.notes || '',
   });
 
   const [errors, setErrors] = useState({});
@@ -156,6 +157,22 @@ export default function LeadForm({ initialData = null, onSubmit, onCancel }) {
             ))}
           </select>
         </div>
+      </div>
+
+      {/* Notes */}
+      <div className="mt-4">
+        <label htmlFor="notes" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+          Notes
+        </label>
+        <textarea
+          id="notes"
+          name="notes"
+          value={formData.notes}
+          onChange={handleChange}
+          rows={3}
+          className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 dark:bg-slate-800 dark:text-white rounded-lg outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors resize-none"
+          placeholder="Any additional information..."
+        />
       </div>
 
       <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-700 mt-6">

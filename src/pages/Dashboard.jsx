@@ -17,7 +17,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-900 transition-colors duration-200 p-4 md:p-8">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-[1800px] 2xl:max-w-full 2xl:px-12 mx-auto space-y-6">
 
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -28,7 +28,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Grid: 1 col on mobile, 2 on tablet, 4 on desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-8">
           <StatsCard
             title="Total Leads"
             value="1,284"
@@ -59,16 +59,16 @@ export default function Dashboard() {
           />
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Column */}
-          <div className="space-y-6">
+        {/* Main Content Grid: 12 columns on large screens */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8">
+          {/* Left Column (Recent Leads & Pipeline) - 66% width */}
+          <div className="space-y-6 lg:col-span-8">
             <PipelineOverview leads={leads} />
             <RecentLeads leads={leads} />
           </div>
 
-          {/* Right Column */}
-          <div className="space-y-6">
+          {/* Right Column (Quick Actions) - 33% width */}
+          <div className="space-y-6 lg:col-span-4">
             <QuickActions />
           </div>
         </div>

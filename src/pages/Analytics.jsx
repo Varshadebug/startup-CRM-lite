@@ -30,7 +30,7 @@ export default function Analytics() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-200 p-4 md:p-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1800px] 2xl:max-w-full 2xl:px-12 mx-auto">
           <LoadingSkeleton />
         </div>
       </div>
@@ -49,7 +49,7 @@ export default function Analytics() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-200 p-4 md:p-8">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-[1800px] 2xl:max-w-full 2xl:px-12 mx-auto space-y-6">
         
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -65,27 +65,27 @@ export default function Analytics() {
         <StatsCards metrics={metrics} />
 
         {/* Main Grid: 1 col on mobile, 2 cols on md+ */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 xl:gap-8">
           <PieChartCard data={metrics.statusDistribution} totalLeads={metrics.totalLeads} />
           <FunnelChartCard data={metrics.funnelData} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 xl:gap-8">
           <BarChartCard data={metrics.monthlyLeads} />
           <LineChartCard data={metrics.conversionByMonth} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 xl:gap-8">
           <RevenueChartCard data={metrics.revenueByMonth} />
           <LeadSourceChart data={metrics.leadSourceStats} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 xl:gap-8">
           <ActivityHeatmap data={metrics.activityHeatmap} />
           <TopPerformersCard data={metrics.topPerformers} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 xl:gap-8 pb-8">
           <ForecastCard forecast={metrics.forecastRevenue} />
           <SalesVelocityCard velocity={metrics.salesVelocity} />
         </div>

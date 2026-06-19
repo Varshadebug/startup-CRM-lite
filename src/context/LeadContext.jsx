@@ -9,6 +9,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
  * @property {string} phone
  * @property {'New' | 'Contacted' | 'Meeting Scheduled' | 'Proposal Sent' | 'Won' | 'Lost'} status
  * @property {'Website' | 'Referral' | 'LinkedIn' | 'Cold Call' | 'Email Campaign' | 'Other'} source
+ * @property {string} [notes]
  * @property {string} createdAt
  */
 

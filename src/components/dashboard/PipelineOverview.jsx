@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 /**
  * @typedef {Object} Lead
@@ -16,12 +16,14 @@ import React from 'react';
  * @param {Lead[]} props.leads - The array of lead objects to analyze.
  * @returns {JSX.Element} The rendered PipelineOverview component.
  */
-export default function PipelineOverview({ leads }) {
+const PipelineOverview = React.memo(function PipelineOverview({ leads }) {
   // Aggregate counts per status
-  const statusCounts = leads.reduce((acc, lead) => {
-    acc[lead.status] = (acc[lead.status] || 0) + 1;
-    return acc;
-  }, {});
+  const statusCounts = useMemo(() => {
+    return leads.reduce((acc, lead) => {
+      acc[lead.status] = (acc[lead.status] || 0) + 1;
+      return acc;
+    }, {});
+  }, [leads]);
 
   const total = leads.length || 1; // Prevent division by zero
 
@@ -39,10 +41,16 @@ export default function PipelineOverview({ leads }) {
 
   return (
     <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-slate-700 transition-colors duration-200">
-      <h2 className="text-lg font-semibold text-slate-800 dark:text-white mb-6">Pipeline Overview</h2>
+      <h2 id="pipeline-overview-heading" className="text-lg font-semibold text-slate-800 dark:text-white mb-6">Pipeline Overview</h2>
       
       {/* Horizontal Bar */}
-      <div className="w-full h-6 rounded-full flex overflow-hidden mb-6 bg-slate-100 dark:bg-slate-700">
+      <div 
+        className="w-full h-6 rounded-full flex overflow-hidden mb-6 bg-slate-100 dark:bg-slate-700"
+        role="progressbar"
+        aria-labelledby="pipeline-overview-heading"
+        aria-valuenow={leads.length}
+        aria-valuemin="0"
+      >
         {orderedStatuses.map(status => {
           const count = statusCounts[status] || 0;
           if (count === 0) return null;
@@ -54,13 +62,14 @@ export default function PipelineOverview({ leads }) {
               className={`h-full ${statusConfig[status]?.color || 'bg-slate-400'}`}
               style={{ width: `${percentage}%` }}
               title={`${status}: ${count} (${percentage.toFixed(1)}%)`}
+              aria-label={`${status}: ${count} leads, ${percentage.toFixed(1)}%`}
             />
           );
         })}
       </div>
 
       {/* Legend */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4" aria-hidden="true">
         {orderedStatuses.map(status => {
           const count = statusCounts[status] || 0;
           if (count === 0) return null;
@@ -76,4 +85,6 @@ export default function PipelineOverview({ leads }) {
       </div>
     </div>
   );
-}
+});
+
+export default PipelineOverview;
