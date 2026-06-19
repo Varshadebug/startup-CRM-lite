@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLeads } from '../../context/LeadContext';
 import * as XLSX from 'xlsx';
 import AddLeadModal from './AddLeadModal';
+import { formatDate } from '../../utils/dateHelpers';
 
 export default function QuickActions() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function QuickActions() {
       Phone: lead.phone || '',
       Status: lead.status || '',
       Source: lead.source || '',
-      'Created Date': lead.createdAt ? new Date(lead.createdAt).toLocaleDateString() : ''
+      'Created Date': formatDate(lead.createdAt || lead.dateAdded)
     }));
   };
 

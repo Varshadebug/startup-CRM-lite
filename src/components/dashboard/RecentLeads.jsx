@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { formatDate } from '../../utils/dateHelpers';
 
 /**
  * @typedef {Object} Lead
@@ -6,7 +7,8 @@ import React, { useMemo } from 'react';
  * @property {string} name - The lead name.
  * @property {string} company - The lead's company.
  * @property {string} status - The current status of the lead.
- * @property {string} dateAdded - The date the lead was added.
+ * @property {string} [dateAdded] - Legacy date added.
+ * @property {string} [createdAt] - Modern creation date.
  */
 
 /**
@@ -20,7 +22,11 @@ const RecentLeads = React.memo(function RecentLeads({ leads }) {
   // Memoize the sorting and slicing so it only recalculates if leads array changes
   const displayLeads = useMemo(() => {
     return [...leads]
-      .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded))
+      .sort((a, b) => {
+        const dateA = new Date(a.createdAt || a.dateAdded || new Date());
+        const dateB = new Date(b.createdAt || b.dateAdded || new Date());
+        return dateB - dateA;
+      })
       .slice(0, 5);
   }, [leads]);
 
@@ -61,7 +67,7 @@ const RecentLeads = React.memo(function RecentLeads({ leads }) {
                     </span>
                   </td>
                   <td className="py-4 text-sm text-slate-500 dark:text-slate-400 text-right whitespace-nowrap">
-                    {new Date(lead.dateAdded).toLocaleDateString()}
+                    {formatDate(lead.createdAt || lead.dateAdded)}
                   </td>
                 </tr>
               ))

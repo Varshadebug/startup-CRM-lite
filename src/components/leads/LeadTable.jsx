@@ -1,6 +1,7 @@
 import React from 'react';
 import { Edit2, Trash2 } from 'lucide-react';
 import StatusBadge from './StatusBadge';
+import { formatDate } from '../../utils/dateHelpers';
 
 /**
  * A table component displaying a list of leads for desktop views.
@@ -46,7 +47,7 @@ export default function LeadTable({ leads, onEdit, onDelete }) {
                 <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">{lead.email}</td>
                 <td className="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">{lead.source}</td>
                 <td className="px-6 py-4 text-sm text-slate-500 dark:text-slate-500">
-                  {new Date(lead.createdAt).toLocaleDateString()}
+                  {formatDate(lead.createdAt || lead.dateAdded)}
                 </td>
                 <td className="px-6 py-4 text-right">
                   <div className="flex items-center justify-end gap-2">
