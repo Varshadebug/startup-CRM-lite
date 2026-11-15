@@ -1,9 +1,27 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-// Create an Axios instance with base URL from environment variables
-// Use .trim() to ensure no trailing spaces or carriage returns break the URL
-const baseURL = (import.meta.env.VITE_API_URL || 'http://localhost:5000').trim().replace(/\/$/, '');
+// Determine API base URL dynamically:
+// 1. Uses VITE_API_URL if configured.
+// 2. In production (e.g. deployed on Vercel), if VITE_API_URL is missing or set to localhost,
+//    safely falls back to the live Render backend URL.
+// 3. In local development, falls back to http://localhost:5000.
+const getBaseURL = () => {
+  const envUrl = import.meta.env.VITE_API_URL?.trim();
+  
+  if (import.meta.env.PROD) {
+    // If production build and envUrl is empty or inadvertently pointing to localhost
+    if (!envUrl || envUrl.includes('localhost') || envUrl.includes('127.0.0.1')) {
+      return 'https://startup-crm-lite-backend-jupf.onrender.com';
+    }
+    return envUrl.replace(/\/+$/, '');
+  }
+
+  // Local development
+  return (envUrl || 'http://localhost:5000').replace(/\/+$/, '');
+};
+
+const baseURL = getBaseURL();
 const api = axios.create({
   baseURL,
 });
