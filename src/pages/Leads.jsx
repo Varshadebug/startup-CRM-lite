@@ -16,13 +16,19 @@ import { useResponsive } from '../hooks/useMediaQuery';
  * @returns {JSX.Element}
  */
 export default function Leads() {
-  const { leads, addLead, updateLead, deleteLead } = useLeads();
+  const { leads, addLead, updateLead, deleteLead, fetchLeads } = useLeads();
   const [viewMode, setViewMode] = useState('table'); // 'table' or 'card'
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All');
   const { isMobile, isDesktop } = useResponsive();
+
+  // Fetch leads on component mount (fixes leads disappearing on refresh)
+  React.useEffect(() => {
+    fetchLeads();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   React.useEffect(() => {
     if (isMobile) setViewMode('card');
